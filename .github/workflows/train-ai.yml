@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --global user.name "Ghost Dev [AI]"
           git config --global user.email "ghost-dev@ai.bot"
-          git add CLAUDE.md || true
-          git commit -m "📝 AI nambahin aturan baru ke CLAUDE.md hasil evaluasi" || echo "Gak ada perubahan"
-          git push
+          git add CLAUDE.md
+          git commit -m "📝 AI nambahin aturan baru ke CLAUDE.md" || echo "Gak ada perubahan"
+          git push https://${{ secrets.GH_AGENT_TOKEN }}@github.com/${{ github.repository }}.git main
