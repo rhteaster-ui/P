@@ -5,7 +5,7 @@
   "main": "agent.js",
   "type": "module",
   "dependencies": {
-    "@google/genai": "^0.1.1",
+    "@google/genai": "latest",
     "fs-extra": "^11.2.0"
   }
 } 
