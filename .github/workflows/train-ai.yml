@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: 📦 Install Alat Pertukangan (dari package.json)
-        run: npm install
+      - name: 📦 Install Alat Pertukangan (Jalur Paksa)
+        run: npm install @google/genai fs-extra
 
       - name: 🧠 Eksekusi AI buat Bertapa
         env:
