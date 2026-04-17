@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R_hmt ofc - Self-Taught Web Developer</title>
+    <link rel="icon" href="https://res.cloudinary.com/dwiozm4vz/image/upload/v1776154213/fw9vd0pd2wuwl4fosqsz.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom CSS & Tailwind Overrides */
+        :root {
+            --primary-blue: #3B82F6;
+            --dark-bg-1: #0A0A0A;
+            --dark-bg-2: #1A1A1A;
+            --dark-gray: #333333;
+            --light-gray: #CCCCCC;
+            --text-color: #E0E0E0;
+            --glass-bg: rgba(30, 41, 59, 0.15); /* Slightly transparent dark blue-gray */
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: rgba(0, 0, 0, 0.37);
+            --glow-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+            --hover-glow: 0 0 10px rgba(59, 130, 246, 0.4);
+            --font-inter: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-inter);
+            color: var(--text-color);
+            background-color: var(--dark-bg-1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+
+            /* Complex Layered Background with deep, semi 3D effect */
+            background-image:
+                radial-gradient(circle at 10% 90%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), /* Bottom-left subtle blue glow */
+                radial-gradient(circle at 90% 10%, rgba(139, 92, 246, 0.08) 0%, transparent 50%), /* Top-right subtle purple glow */
+                linear-gradient(135deg, #0A0A0A 0%, #100C1F 50%, #0A0A0A 100%), /* Deep black to dark purple */
+                linear-gradient(to bottom, #050505, #151515); /* Base dark gradient */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 var(--glass-shadow);
+            border-radius: 12px;
+            transition: all 0.3s ease-out;
+        }
+
+        .glass-card:hover {
+            box-shadow: var(--glow-shadow);
+            transform: translateY(-3px);
+        }
+
+        /* Text Gradient for accent color */
+        .text-gradient-blue {
+            background: linear-gradient(90deg, var(--primary-blue) 0%, #60A5FA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Animations: Fade in and move up */
+        @keyframes fadeInMoveUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-load {
+            animation: fadeInMoveUp 0.8s ease-out forwards;
+            opacity: 0; /* Initial state before animation */
+        }
+
+        /* Staggered animation delays */
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+        .animate-delay-5 { animation-delay: 0.5s; }
+        .animate-delay-6 { animation-delay: 0.6s; }
+        .animate-delay-7 { animation-delay: 0.7s; }
+        .animate-delay-8 { animation-delay: 0.8s; }
+        .animate-delay-9 { animation-delay: 0.9s; }
+        .animate-delay-10 { animation-delay: 1.0s; }
+        .animate-delay-11 { animation-delay: 1.1s; }
+
+        /* 3D Icon Hover Animation */
+        @keyframes iconHover3D {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(15deg) scale(1.05); }
+            100% { transform: rotateY(0deg); }
+        }
+
+        .tech-icon-wrapper:hover .tech-icon {
+            animation: iconHover3D 0.6s ease-in-out;
+        }
+
+        .tech-icon {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.7;
+        }
+
+        .scroll-indicator span {
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg-1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--dark-gray);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-blue);
+        }
+
+    </style>
+</head>
+<body class="antialiased leading-relaxed">
+
+    <header class="w-full py-6 px-4 md:px-8 lg:px-16 absolute top-0 z-50">
+        <nav class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-bold text-white tracking-wider animate-on-load animate-delay-1">
+                R_hmt <span class="text-gradient-blue">ofc</span>
+            </a>
+            <ul class="hidden md:flex space-x-8 text-lg">
+                <li><a href="#about" class="text-gray-300 hover:text-primary-blue transition-colors animate-on-load animate-delay-2">About</a></li>
+                <li><a href="#projects" class="text-gray-300 hover:text-primary-blue transition-colors animate-on-load animate-delay-3">Projects</a></li>
+                <li><a href="#tech-stack" class="text-gray-300 hover:text-primary-blue transition-colors animate-on-load animate-delay-4">Tech Stack</a></li>
+                <li><a href="#contact" class="text-gray-300 hover:text-primary-blue transition-colors animate-on-load animate-delay-5">Contact</a></li>
+            </ul>
+            <!-- Mobile menu button can be added here if needed -->
+        </nav>
+    </header>
+
+    <main class="flex-grow relative z-10">
+
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center px-4 py-20 md:py-0">
+            <div class="max-w-4xl mx-auto space-y-8 animate-on-load animate-delay-6">
+                <img src="https://res.cloudinary.com/dwiozm4vz/image/upload/v1776154213/fw9vd0pd2wuwl4fosqsz.png" alt="R_hmt ofc Profile" class="w-48 h-auto mx-auto object-cover rounded-lg shadow-lg border border-gray-700 glass-card animate-on-load animate-delay-7" style="box-shadow: var(--glow-shadow);">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-white animate-on-load animate-delay-8">
+                    Hello, I'm <span class="text-gradient-blue">R_hmt ofc</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto animate-on-load animate-delay-9">
+                    Crafting high-performance web experiences for a connected world.
+                </p>
+                <a href="#about" class="inline-block bg-primary-blue text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 animate-on-load animate-delay-10">
+                    Explore My Work
+                </a>
+            </div>
+            <div class="scroll-indicator text-gray-400 animate-on-load animate-delay-10">
+                <span data-lucide="chevron-down" class="w-8 h-8"></span>
+                <span class="text-sm">Scroll</span>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-transparent to-black/20">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="glass-card p-8 md:p-10 animate-on-load animate-delay-1">
+                    <h2 class="text-4xl font-bold mb-6 text-white leading-tight">
+                        About <span class="text-gradient-blue">Me</span>
+                    </h2>
+                    <p class="text-lg text-gray-300 mb-4">
+                        I am <strong class="text-white">R_hmt ofc</strong>, a passionate self-taught web developer dedicated to building impactful digital solutions. My expertise lies in creating robust web applications, progressive web apps (PWAs), and highly optimized, lightweight websites designed to perform flawlessly even on low-end mobile devices.
+                    </p>
+                    <p class="text-lg text-gray-300">
+                        With a unique development approach — entirely from a mobile device — I've successfully delivered <strong class="text-white">over 50 diverse projects</strong>, transforming complex ideas into intuitive, high-performance user experiences. I thrive on innovation and efficiency, always pushing the boundaries of what's possible in the mobile-first web ecosystem.
+                    </p>
+                </div>
+                <div class="glass-card p-8 md:p-10 animate-on-load animate-delay-2">
+                    <h3 class="text-3xl font-bold mb-6 text-white leading-tight">
+                        My <span class="text-gradient-blue">Philosophy</span>
+                    </h3>
+                    <ul class="space-y-4 text-lg text-gray-300">
+                        <li class="flex items-start">
+                            <span data-lucide="smartphone" class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0"></span>
+                            <span><strong class="text-white">Mobile-First Excellence:</strong> Developing entirely on mobile devices gives me a unique perspective, ensuring every project is inherently responsive and performant across all screens.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span data-lucide="zap" class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0"></span>
+                            <span><strong class="text-white">Performance Driven:</strong> Specializing in lightweight, efficient code that delivers blazing-fast load times and smooth interactions, crucial for user retention.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span data-lucide="gem" class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0"></span>
+                            <span><strong class="text-white">Elegant Simplicity:</strong> Believing that the best solutions are often the simplest, I focus on clean design and intuitive user interfaces.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section (Placeholder) -->
+        <section id="projects" class="py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-t from-transparent to-black/20">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-12 text-white animate-on-load animate-delay-1">
+                    My <span class="text-gradient-blue">Projects</span>
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Card 1 -->
+                    <div class="glass-card p-6 text-left animate-on-load animate-delay-2">
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Project Alpha</h3>
+                        <p class="text-gray-400 mb-4">A high-performance PWA designed for seamless offline experience and rapid data synchronization.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">React</span>
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">Tailwind CSS</span>
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">PWA</span>
+                        </div>
+                        <a href="#" class="text-primary-blue hover:underline flex items-center">
+                            View Project <span data-lucide="external-link" class="w-4 h-4 ml-2"></span>
+                        </a>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="glass-card p-6 text-left animate-on-load animate-delay-3">
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Project Beta</h3>
+                        <p class="text-gray-400 mb-4">An elegant UI/UX redesign for an existing enterprise web application, focusing on user-centric flows.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">UI/UX Design</span>
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">Figma</span>
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">Vue.js</span>
+                        </div>
+                        <a href="#" class="text-primary-blue hover:underline flex items-center">
+                            View Project <span data-lucide="external-link" class="w-4 h-4 ml-2"></span>
+                        </a>
+                    </div>
+                    <!-- Project Card 3 -->
+                    <div class="glass-card p-6 text-left animate-on-load animate-delay-4">
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Project Gamma</h3>
+                        <p class="text-gray-400 mb-4">A lightweight backend API developed with FastAPI, serving data to a series of mobile-optimized frontends.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">FastAPI</span>
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">Python</span>
+                            <span class="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">Redis</span>
+                        </div>
+                        <a href="#" class="text-primary-blue hover:underline flex items-center">
+                            View Project <span data-lucide="external-link" class="w-4 h-4 ml-2"></span>
+                        </a>
+                    </div>
+                </div>
+                <a href="#contact" class="inline-block mt-12 bg-gray-800 text-primary-blue font-semibold py-3 px-8 rounded-full border border-primary-blue hover:bg-primary-blue hover:text-white transition-all duration-300 animate-on-load animate-delay-5">
+                    See More Projects
+                </a>
+            </div>
+        </section>
+
+        <!-- Tech Stack Section -->
+        <section id="tech-stack" class="py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-transparent to-black/20">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-12 text-white animate-on-load animate-delay-1">
+                    My <span class="text-gradient-blue">Tech Stack</span>
+                </h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+                    <!-- Tech Icon 1: HTML -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-2">
+                        <span data-lucide="code" class="tech-icon w-12 h-12 text-orange-500 mb-3"></span>
+                        <p class="text-lg font-medium text-white">HTML</p>
+                    </div>
+                    <!-- Tech Icon 2: CSS -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-3">
+                        <span data-lucide="palette" class="tech-icon w-12 h-12 text-blue-500 mb-3"></span>
+                        <p class="text-lg font-medium text-white">CSS</p>
+                    </div>
+                    <!-- Tech Icon 3: JavaScript -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-4">
+                        <span data-lucide="variable" class="tech-icon w-12 h-12 text-yellow-500 mb-3"></span>
+                        <p class="text-lg font-medium text-white">JavaScript</p>
+                    </div>
+                    <!-- Tech Icon 4: UI/UX Design -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-5">
+                        <span data-lucide="layout" class="tech-icon w-12 h-12 text-purple-500 mb-3"></span>
+                        <p class="text-lg font-medium text-white">UI/UX Design</p>
+                    </div>
+                    <!-- Tech Icon 5: React -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-6">
+                        <span data-lucide="atom" class="tech-icon w-12 h-12 text-blue-400 mb-3"></span>
+                        <p class="text-lg font-medium text-white">React</p>
+                    </div>
+                    <!-- Tech Icon 6: Vue -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-7">
+                        <span data-lucide="vue" class="tech-icon w-12 h-12 text-green-500 mb-3"></span>
+                        <p class="text-lg font-medium text-white">Vue</p>
+                    </div>
+                    <!-- Tech Icon 7: Tailwind -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-8">
+                        <span data-lucide="wind" class="tech-icon w-12 h-12 text-teal-400 mb-3"></span>
+                        <p class="text-lg font-medium text-white">Tailwind</p>
+                    </div>
+                    <!-- Tech Icon 8: FastAPI -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-9">
+                        <span data-lucide="bolt" class="tech-icon w-12 h-12 text-green-600 mb-3"></span>
+                        <p class="text-lg font-medium text-white">FastAPI</p>
+                    </div>
+                    <!-- Tech Icon 9: TypeScript -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-10">
+                        <span data-lucide="type" class="tech-icon w-12 h-12 text-blue-600 mb-3"></span>
+                        <p class="text-lg font-medium text-white">TypeScript</p>
+                    </div>
+                    <!-- Tech Icon 10: Upstash Redis -->
+                    <div class="glass-card tech-icon-wrapper p-6 flex flex-col items-center justify-center animate-on-load animate-delay-11">
+                        <span data-lucide="database" class="tech-icon w-12 h-12 text-red-500 mb-3"></span>
+                        <p class="text-lg font-medium text-white">Upstash Redis</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 px-4 md:px-8 lg:px-16 bg-gradient-to-t from-transparent to-black/20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-12 text-white animate-on-load animate-delay-1">
+                    Get In <span class="text-gradient-blue">Touch</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-10 animate-on-load animate-delay-2">
+                    Have a project in mind or just want to connect? Feel free to reach out through any of these platforms.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <a href="https://wa.me/message/YOUR_WHATSAPP_CHANNEL_ID" target="_blank" class="glass-card p-6 flex items-center justify-center space-x-4 hover:border-primary-blue animate-on-load animate-delay-3">
+                        <span data-lucide="message-circle" class="w-8 h-8 text-green-500"></span>
+                        <span class="text-xl font-medium text-white">WhatsApp Channel</span>
+                    </a>
+                    <a href="https://www.instagram.com/rahmt_nhw" target="_blank" class="glass-card p-6 flex items-center justify-center space-x-4 hover:border-primary-blue animate-on-load animate-delay-4">
+                        <span data-lucide="instagram" class="w-8 h-8 text-pink-500"></span>
+                        <span class="text-xl font-medium text-white">Instagram</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@r_hmtofc" target="_blank" class="glass-card p-6 flex items-center justify-center space-x-4 hover:border-primary-blue animate-on-load animate-delay-5">
+                        <span data-lucide="play-circle" class="w-8 h-8 text-gray-400"></span> <!-- Lucide doesn't have a specific TikTok icon, using play-circle as a generic video icon. -->
+                        <span class="text-xl font-medium text-white">TikTok</span>
+                    </a>
+                    <a href="https://github.com/rahmat-369" target="_blank" class="glass-card p-6 flex items-center justify-center space-x-4 hover:border-primary-blue animate-on-load animate-delay-6">
+                        <span data-lucide="github" class="w-8 h-8 text-gray-300"></span>
+                        <span class="text-xl font-medium text-white">GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-10 px-4 md:px-8 lg:px-16 text-center text-gray-500 text-sm border-t border-gray-800">
+        <p class="animate-on-load animate-delay-1">© 2024 R_hmt ofc. All rights reserved.</p>
+        <p class="animate-on-load animate-delay-2">Crafted with <span class="text-primary-blue">passion</span> and <span class="text-primary-blue">precision</span>.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Note: For this task, animations are primarily handled via CSS 'animation' property
+        // with 'animation-delay' for staggered effects on page load. No complex JavaScript
+        // Intersection Observer is used to keep the solution purely HTML/CSS focused as requested.
+    </script>
+</body>
+</html>
