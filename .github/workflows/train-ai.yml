@@ -1,16 +1,16 @@
 name: 🧘‍♂️ Pertapaan AI (Self-Training)
 
 on:
-  workflow_dispatch: # Tombol manual
+  workflow_dispatch:
 
 jobs:
   bertapa:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 👈 INI KUNCI SAKTINYA BIAR GAK ERROR 403
     steps:
       - name: 📥 Ngambil kodingan lu
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_AGENT_TOKEN }}
 
       - name: ⚙️ Setup Mesin Node.js
         uses: actions/setup-node@v4
@@ -31,4 +31,4 @@ jobs:
           git config --global user.email "ghost-dev@ai.bot"
           git add CLAUDE.md
           git commit -m "📝 AI nambahin aturan baru ke CLAUDE.md hasil evaluasi" || echo "Gak ada perubahan"
-          git push https://${{ secrets.GH_AGENT_TOKEN }}@github.com/${{ github.repository }}.git main
+          git push
