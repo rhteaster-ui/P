@@ -1,35 +1,34 @@
-import fs from 'fs-extra';
+name: 🧘‍♂️ Pertapaan AI (Self-Training)
 
-const apiKey = process.env.GEMINI_API_KEY;
-const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+on:
+  workflow_dispatch: # Tombol manual
 
-async function runTraining() {
-  console.log("🧘‍♂️ Ghost Dev lagi meditasi tingkat tinggi...");
+jobs:
+  bertapa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Ngambil kodingan lu
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_AGENT_TOKEN }}
 
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: "Lu adalah Senior Auditor. Buat satu aturan koding singkat untuk file CLAUDE.md dalam format JSON: {\"action\": \"write_file\", \"file_path\": \"CLAUDE.md\", \"content\": \"Aturan: Wajib pake semicolon.\"} JANGAN KASIH TEKS LAIN." }] }]
-      })
-    });
+      - name: ⚙️ Setup Mesin Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    const data = await response.json();
-    let rawText = data.candidates[0].content.parts[0].text.trim();
-    
-    // TRICK: Hapus bungkusan ```json atau ``` kalo AI-nya bandel
-    rawText = rawText.replace(/```json|```/g, "").trim();
+      - name: 📦 Install Alat Pertukangan
+        run: npm install fs-extra
 
-    const aiDecision = JSON.parse(rawText);
-    
-    if (aiDecision.action === "write_file") {
-      // Pake path absolute biar gak nyasar
-      fs.writeFileSync('./CLAUDE.md', aiDecision.content);
-      console.log("✅ File CLAUDE.md BERHASIL DIBIKIN!");
-    }
-  } catch (error) {
-    console.error("❌ Waduh, Gemini-nya lagi sariawan:", error.message);
-  }
-}
-runTraining();
+      - name: 🧠 Eksekusi AI buat Bertapa
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node train.js
+
+      - name: 💾 Simpan Catatan (CLAUDE.md) ke Repo
+        run: |
+          git config --global user.name "Ghost Dev [AI]"
+          git config --global user.email "ghost-dev@ai.bot"
+          git add CLAUDE.md
+          git commit -m "📝 AI nambahin aturan baru ke CLAUDE.md hasil evaluasi" || echo "Gak ada perubahan"
+          git push https://${{ secrets.GH_AGENT_TOKEN }}@github.com/${{ github.repository }}.git main
