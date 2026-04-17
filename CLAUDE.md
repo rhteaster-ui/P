@@ -1,0 +1,1 @@
+Setiap elemen input `password` dalam form login harus selalu menyertakan atribut `minlength` dan/atau `pattern` untuk memastikan validasi kekuatan kata sandi dasar di sisi klien, melengkapi atribut `required`.
