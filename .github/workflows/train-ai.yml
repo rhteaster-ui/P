@@ -1,13 +1,13 @@
-name: 🧘‍♂️ Pertapaan AI (Self-Training)
+name: 👷‍♂️ Kuli AI (Build Portofolio)
 
 on:
   workflow_dispatch:
 
 jobs:
-  bertapa:
+  build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 👈 INI KUNCI SAKTINYA BIAR GAK ERROR 403
+      contents: write
     steps:
       - name: 📥 Ngambil kodingan lu
         uses: actions/checkout@v4
@@ -20,15 +20,15 @@ jobs:
       - name: 📦 Install Alat Pertukangan
         run: npm install fs-extra
 
-      - name: 🧠 Eksekusi AI buat Bertapa
+      - name: 🧠 Eksekusi AI buat Ngoding
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node train.js
+        run: node build.js
 
-      - name: 💾 Simpan Catatan (CLAUDE.md) ke Repo
+      - name: 💾 Simpan Portofolio (index.html) ke Repo
         run: |
           git config --global user.name "Ghost Dev [AI]"
           git config --global user.email "ghost-dev@ai.bot"
-          git add CLAUDE.md
-          git commit -m "📝 AI nambahin aturan baru ke CLAUDE.md hasil evaluasi" || echo "Gak ada perubahan"
+          git add index.html
+          git commit -m "🚀 AI nge-build pondasi portofolio R_hmt ofc" || echo "Gak ada perubahan"
           git push
